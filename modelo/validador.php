@@ -64,7 +64,7 @@ if(isset($_POST['registroVehiculo']) && $_POST['registroVehiculo'] === 'true'){
     // Se reciben las variables del registro del vehiculo
     $placa = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Placa");
     $color = isset($_POST['InputColor']) && $_POST['InputColor'] !== '' ? valTexto($_POST['InputColor']) : Info("Falta llenar el campo Color");
-    $marca = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
+    $marca = isset($_POST['InputMarca']) && $_POST['InputMarca'] !== '' ? valTexto($_POST['InputMarca']) : Info("Falta llenar el campo ");
     $tipoVehiculo = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
     $conductor = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
     $propietario = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
