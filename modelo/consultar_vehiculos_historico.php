@@ -3,59 +3,44 @@
 error_reporting(0);
 require "./conexion.php";
 $conn = conectar();
-$order_ini = "id DESC";
-function consultar_lista_datos_tabla($conn)
+$order_ini = "placa DESC, va.id DESC";
+function consultar_lista_datos_tabla($conn, $fecha, $valor2, $valor3, $valor4)
 {
 
     $fecha_1 = "";
     $fecha_2 = "";
-    $sql = "SELECT id, placa, color,  marca, conductor, propietario  FROM vehiculos v
+    $sql = "SELECT va.id, placa, color,  marca, va.id_conductor, va.id_propietario, estado, fecharegistro FROM vehiculos v
                 INNER JOIN propietarios p ON v.propietario = p.id_propietario
-                INNER JOIN conductores c ON v.conductor = c.id_conductor";
+                INNER JOIN conductores c ON v.conductor = c.id_conductor
+                INNER JOIN vehiculos_asignados va ON v.id = va.id_vehiculos ";
 
 
     //Resto
     $resto_sql = "";
 
     $from_where = " WHERE 1=1 ";
-    /*if ($fecha !== "") {
-        $fechas  = explode("-", $fecha);
-        $fecha_1 = explode("-", str_replace("/", "-", $fechas[0]));
-        $fecha_2 = explode("-", str_replace("/", "-", $fechas[1]));
-    }
 
-    if (is_array($fecha_1) && is_array($fecha_2)) {
-        $from_where .= " AND vac.fecha_reg >= '" . trim($fecha_1[2]) . "-" . trim($fecha_1[1]) . "-" . trim($fecha_1[0]) . " 00:00:00' AND vac.fecha_reg <= '" . trim($fecha_2[2]) . "-" . trim($fecha_2[1]) . "-" . trim($fecha_2[0]) . " 23:59:59' ";
+    if ($fecha !== "") {
+        $from_where .= " AND fecharegistro >= '" .$fecha . " 00:00:00' AND fecharegistro <= '" . $fecha . " 23:59:59' ";
     } else{
         $fecha_hoy = date("Y-m-d");
         $fecha_ini = date("Y-m-d", strtotime($fecha_hoy . " -30 days"));
-        $from_where .= " AND vac.fecha_reg >= '" . $fecha_ini . " 00:00:00' AND vac.fecha_reg <= '" . $fecha_hoy . " 23:59:59' ";
+        $from_where .= " AND fecharegistro >= '" . $fecha_ini . " 00:00:00' AND fecharegistro <= '" . $fecha_hoy . " 23:59:59' ";
         
     }
 
-    if($malla !== ""){
-        $from_where .= " AND malla = '$malla'";
+    if($valor2 !== ""){
+        $from_where .= " AND placa = '$valor2'";
     }
 
-    if($sector !== ""){
-        $from_where .= " AND sector = '$sector'";
+    if($valor3 !== ""){
+        $from_where .= " AND conductor = '$valor3'";
     }
 
-    if($ctaCon !== ""){
-        $from_where .= " AND ctacontrato = '$ctaCon'";
+    if($valor4 !== ""){
+        $from_where .= " AND propietario = '$valor4'";
     }
 
-    if($prod !== ""){
-        $from_where .= " AND producto LIKE '%$prod%'";
-    }
-
-    if($munic !== ""){
-        $from_where .= " AND municipio = '$munic'";
-    } 
-
-    if($idusu !== ""){
-        $from_where .= " AND vac.id_usu = '$idusu' and estado_venta != '0'";
-    }*/
 
     
     
@@ -72,30 +57,22 @@ function consultar_lista_datos_tabla($conn)
 }
 
 
-/*if (isset($_GET['fecha']))
-    $fecha = $_GET['fecha'];
+if (isset($_GET['valor1']))
+    $fecha = $_GET['valor1'];
 else $fecha = '';
-if (isset($_GET['malla']))
-    $malla = $_GET['malla'];
-else $malla = '';
-if (isset($_GET['sector']))
-    $sector = $_GET['sector'];
-else $sector = '';
-if (isset($_GET['munic']))
-    $munic = $_GET['munic'];
-else $munic = '';
-if (isset($_GET['prod']))
-    $prod = $_GET['prod'];
-else $prod = '';
-if (isset($_GET['ctaCon']))
-    $ctaCon = $_GET['ctaCon'];
-else $ctaCon = '';
-if (isset($_GET['idusu']))
-    $idusu = $_GET['idusu'];
-else $idusu = '';*/
+if (isset($_GET['valor2']))
+    $valor2 = $_GET['valor2'];
+else $valor2 = '';
+if (isset($_GET['valor3']))
+    $valor3 = $_GET['valor3'];
+else $valor3 = '';
+if (isset($_GET['valor4']))
+    $valor4 = $_GET['valor4'];
+else $valor4 = '';
 
 
-list($num_lista_api, $datos_lista_api, $sql_all, $from_where) = consultar_lista_datos_tabla($conn);
+
+list($num_lista_api, $datos_lista_api, $sql_all, $from_where) = consultar_lista_datos_tabla($conn, $fecha, $valor2, $valor3, $valor4);
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Easy set variables
      */
@@ -220,7 +197,7 @@ $num_act_inm = mysqli_num_rows($ejec_sql);
 if ($num_act_inm > 0) $num_sql = $num_act_inm;
 else $num_sql = 0;
 
-//echo $sQuery;
+echo $sQuery;
 if ($num_act_inm > 0) {
     $sQuerySinLimit = "
             $sql_all 
@@ -281,25 +258,35 @@ for ($c = 0; $c < $num_paginacion; $c++) {
     $row = array();
 
     // Consultar el conductor
-    $queryCond = "SELECT primer_nombre, segundo_nombre FROM conductores WHERE id_conductor = {$matriz_paginacion[$c]['conductor']}";
+    $queryCond = "SELECT primer_nombre, segundo_nombre FROM conductores WHERE id_conductor = {$matriz_paginacion[$c]['id_conductor']}";
     $resCond = mysqli_query($conn, $queryCond);
     $dataCond = $resCond->fetch_row();
 
     // Consultar propietario
-    $queryProp = "SELECT primer_nombre, segundo_nombre FROM propietarios WHERE id_propietario = {$matriz_paginacion[$c]['propietario']}";
+    $queryProp = "SELECT primer_nombre, segundo_nombre FROM propietarios WHERE id_propietario = {$matriz_paginacion[$c]['id_propietario']}";
     $resProp = mysqli_query($conn, $queryProp);
     $dataProp = $resProp->fetch_row();
 
-    $id = '<button onClick="buscarDatos('.$matriz_paginacion[$c]['id'].')" id="editarDatos" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  title="Modificar" class="btn btn-outline-info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
-        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
-      </svg> '.$matriz_paginacion[$c]['id'].'</button>' ;
+    switch ($matriz_paginacion[$c]['estado']) {
+        case '0':
+           $estado = "<span class='badge bg-success'>Activo</span>";
+            break;
+        
+        default:
+        $estado = "<span class='badge bg-info'>Inactivo</span>";
+            break;
+    }
+
+
+    $id = $matriz_paginacion[$c]['id'];
     $row['id'] = $id;
     $row['placa'] = $matriz_paginacion[$c]['placa'];
     $row['marca'] = $matriz_paginacion[$c]['marca'];
     $row['color'] = $matriz_paginacion[$c]['color'];
     $row['propietario'] = $dataProp[0].' '.$dataProp[1];
     $row['conductor'] = $dataCond[0].' '.$dataCond[1];
+    $row['estado'] =$estado;
+    $row['fecha'] = $matriz_paginacion[$c]['fecharegistro'];
     
     
     $output['aaData'][] = $row;

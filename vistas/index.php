@@ -44,7 +44,31 @@
         <hr>
         <strong>Registro Vehículos histórico </strong>
         <p>Información de vehiculos </p>
-        <table class="table" id="tabla_2">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="form-label">Fecha</label>
+                <input class="form-control camposLimpiar_1" type="date" name="inputFecha" id="inputFecha">
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label">Placa</label>
+                <input class="form-control camposLimpiar_1" type="text" name="inputPlaca" id="inputPlaca">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="" class="form-label">Conductor</label>
+                <select class="form-select camposSelect_1" aria-label="Default select example" name="selectConductor_b" id="selectConductor_b"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="" class="form-label">Propietario</label>
+                <select class="form-select camposSelect_1" aria-label="Default select example" name="selectPropietario_b" id="selectPropietario_b"></select>
+            </div>
+            <div class="form-group col-md-1 mt-4">
+                <input  class="btn btn-primary form-control" type="button" name="buscar" id="buscar" value="Buscar">
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-bordered" style="width:100%" id="tabla_2">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -53,6 +77,8 @@
                     <th scope="col">Color</th>
                     <th scope="col">Propietario</th>
                     <th scope="col">Conductor</th>
+                    <th scope="col">estado</th>
+                    <th scope="col">fecha registro</th>
                 </tr>
             </thead>
         </table>
@@ -65,25 +91,28 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Modificar Datos</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <form id="guardarDatos" action="../modelo/validador.php" method="POST" autocomplete="off"></form>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="" class="form-label">Conductor</label>
-                                <select class="form-select camposSelect" aria-label="Default select example" name="selectConductor" id="selectConductor" required></select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="" class="form-label">Propietario</label>
-                                <select class="form-select camposSelect" aria-label="Default select example" name="selectPropietario" id="selectPropietario" required></select>
+                    <form id="Guardardatos" action="../modelo/validador.php" method="POST" autocomplete="off">
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="" class="form-label">Conductor</label>
+                                    <select class="form-select camposSelect" aria-label="Default select example" name="selectConductor" id="selectConductor" required></select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="" class="form-label">Propietario</label>
+                                    <select class="form-select camposSelect" aria-label="Default select example" name="selectPropietario" id="selectPropietario" required></select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button id="GuadarClick" type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+                        <input type="hidden" name="idTab" id="idTab">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary cerrarModal" data-bs-dismiss="modal">Cerrar</button>
+                            <button id="GuadarClick" type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
