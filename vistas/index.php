@@ -14,7 +14,7 @@
 
 <body>
     <div class="container">
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills"> 
             <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="index.php">Inicio</a>
             </li>
