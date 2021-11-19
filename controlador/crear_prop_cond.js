@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then(res => res.json())
                 .then(res => {
-                    console.log(res);
+                    
                     if (res.status == '1') {
                         Swal.fire({
                             icon: 'success',
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                         buttonGuardar.style.display = "block";
                         $(".camposLimpiar").val('');
-                        $(".inputTipo").pror("checked", false);
+                        $(".inputTipo").prop("checked", false);
                     } else {
                         buttonGuardar.style.display = "block";
                         Swal.fire({
