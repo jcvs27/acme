@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>acme</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <title>acme</title>
 
 </head>
 
@@ -64,7 +65,7 @@
                 <select class="form-select camposSelect_1" aria-label="Default select example" name="selectPropietario_b" id="selectPropietario_b"></select>
             </div>
             <div class="form-group col-md-1 mt-4">
-                <input  class="btn btn-primary form-control" type="button" name="buscar" id="buscar" value="Buscar">
+                <input class="btn btn-primary form-control" type="button" name="buscar" id="buscarFiltro" value="Consultar">
             </div>
         </div>
         <br>
@@ -82,7 +83,7 @@
                 </tr>
             </thead>
         </table>
-
+        <br><br>
 
 
         <!-- Modal para asignar otro propietario o conductor-->
@@ -117,15 +118,16 @@
             </div>
         </div>
 
-        <footer class="bg-light text-center text-lg-start">
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                © 2021 Copyright
-            </div>
-            <!-- Copyright -->
-
-        </footer>
     </div>
+
+    <footer class="bg-light text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright
+        </div>
+        <!-- Copyright -->
+
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="app-assets/jquery-3.6.0.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>acme</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <title>acme</title>
 </head>
 
 <body>
@@ -47,11 +48,11 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label">Tipo Vehiculo</label>
-                               <select class="form-select camposSelect" aria-label="Default select example" name="tipoVehiculo" id="tipoVehiculo" required>
-                                   <option value="">Seleccionar</option>
-                                   <option value="1">Público</option>
-                                   <option value="2">Privado</option>
-                               </select>
+                                <select class="form-select camposSelect" aria-label="Default select example" name="tipoVehiculo" id="tipoVehiculo" required>
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Público</option>
+                                    <option value="2">Privado</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label">Conductor</label>
@@ -63,22 +64,22 @@
                             </div>
 
                         </div><br>
-                        <footer class="mt-2">
+                        <div class="mt-2">
                             <button id="buttonGuardar" class="btn btn-success mb-3" type="submit">Guardar</button>
-                        </footer>
+                        </div>
                     </form>
                 </blockquote>
             </div>
         </div>
-        <footer class="bg-light text-center text-lg-start mt-2">
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                © 2021 Copyright
-            </div>
-            <!-- Copyright -->
-        </footer>
-    </div>
 
+    </div>
+    <footer class="bg-light text-center text-lg-start mt-2">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright
+        </div>
+        <!-- Copyright -->
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="app-assets/jquery-3.6.0.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

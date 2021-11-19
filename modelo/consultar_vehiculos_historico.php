@@ -9,10 +9,8 @@ function consultar_lista_datos_tabla($conn, $fecha, $valor2, $valor3, $valor4)
 
     $fecha_1 = "";
     $fecha_2 = "";
-    $sql = "SELECT va.id, placa, color,  marca, va.id_conductor, va.id_propietario, estado, fecharegistro FROM vehiculos v
-                INNER JOIN propietarios p ON v.propietario = p.id_propietario
-                INNER JOIN conductores c ON v.conductor = c.id_conductor
-                INNER JOIN vehiculos_asignados va ON v.id = va.id_vehiculos ";
+    $sql = "SELECT va.id, placa, color,  marca, va.id_conductor, va.id_propietario, estado, fecharegistro FROM vehiculos_asignados va
+            RIGHT JOIN vehiculos v ON v.id = va.id_vehiculos  ";
 
 
     //Resto
@@ -22,7 +20,7 @@ function consultar_lista_datos_tabla($conn, $fecha, $valor2, $valor3, $valor4)
 
     if ($fecha !== "") {
         $from_where .= " AND fecharegistro >= '" .$fecha . " 00:00:00' AND fecharegistro <= '" . $fecha . " 23:59:59' ";
-    } else{
+    } else if($valor2 == "" && $valor3 === "" && $valor4 === ""){
         $fecha_hoy = date("Y-m-d");
         $fecha_ini = date("Y-m-d", strtotime($fecha_hoy . " -30 days"));
         $from_where .= " AND fecharegistro >= '" . $fecha_ini . " 00:00:00' AND fecharegistro <= '" . $fecha_hoy . " 23:59:59' ";
@@ -34,11 +32,11 @@ function consultar_lista_datos_tabla($conn, $fecha, $valor2, $valor3, $valor4)
     }
 
     if($valor3 !== ""){
-        $from_where .= " AND conductor = '$valor3'";
+        $from_where .= " AND va.id_conductor = '$valor3'";
     }
 
     if($valor4 !== ""){
-        $from_where .= " AND propietario = '$valor4'";
+        $from_where .= " AND va.id_propietario = '$valor4'";
     }
 
 
@@ -80,7 +78,7 @@ list($num_lista_api, $datos_lista_api, $sql_all, $from_where) = consultar_lista_
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
      * you want to insert a non-database field (for example a counter or static image)
      */
-$aColumns = array('id','placa','marca', 'color');
+$aColumns = array('va.id','placa','marca', 'color', 'fecharegistro');
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -197,7 +195,7 @@ $num_act_inm = mysqli_num_rows($ejec_sql);
 if ($num_act_inm > 0) $num_sql = $num_act_inm;
 else $num_sql = 0;
 
-echo $sQuery;
+//echo $sQuery;
 if ($num_act_inm > 0) {
     $sQuerySinLimit = "
             $sql_all 

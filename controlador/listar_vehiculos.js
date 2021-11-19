@@ -103,7 +103,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 "zeroRecords": "Sin datos",
                 "info": "Pagina _PAGE_ de _PAGES_",
                 "infoEmpty": "Sin Datos",
-                "infoFiltered": "(filtro de _MAX_ total registros)"
+                "infoFiltered": "(filtro de _MAX_ total registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
             },
             columns: [
                 { data: "id", className: "text-center", sortable: true, visible: true },
@@ -170,7 +177,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 "zeroRecords": "Sin datos",
                 "info": "Pagina _PAGE_ de _PAGES_",
                 "infoEmpty": "Sin Datos",
-                "infoFiltered": "(filtro de _MAX_ total registros)"
+                "infoFiltered": "(filtro de _MAX_ total registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
             },
             columns: [
                 { data: "id", className: "text-center", sortable: true, visible: true },
@@ -222,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 [10, 25, 50, 100, "All"],
             ],
             ajax:
-                "../modelo/consultar_vehiculos_historico.php?valor1="+value_1+"&valor2="+value_2+"&valor3="+value_3+"&valor4="+value_4,
+                "../modelo/consultar_vehiculos_historico.php?valor1=" + value_1 + "&valor2=" + value_2 + "&valor3=" + value_3 + "&valor4=" + value_4,
             drawCallback: function (settings) {
                 $(".title_tooltip").tooltip();
                 $("div.dataTables_filter input").unbind();
@@ -233,6 +247,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Usar el buscador
+    $(document).on("keyup", "[aria-controls='tabla_1']", function (e) {
+        if (e.keyCode === 13) {
+
+            $("input[type='search']").blur();
+            oDT.search($("div.dataTables_filter input").val()).draw();
+            return false;
+        }
+
+        if (this.value === "") {
+            oDT.search("").draw();
+        }
+    });
+
+    $(document).on("keyup", "[aria-controls='tabla_2']", function (e) {
+
+        if (e.keyCode === 13) {
+            $("input[aria-controls='search']").blur();
+            oDT1.search($("div.dataTables_filter input").val()).draw();
+            return false;
+        }
+
+        if (this.value === "") {
+            oDT1.search("").draw();
+        }
+    });
     // Proceso para registra los propietarios y conductores
     document.getElementById("Guardardatos").addEventListener("submit", (e) => {
         e.preventDefault();
@@ -284,45 +324,20 @@ document.addEventListener("DOMContentLoaded", () => {
         $(".camposSelect").val('').change();
     });
 
-    // Usar el buscador
-    $(document).on("keyup", "[aria-controls=tabla_1]", function (e) {
-        if (e.keyCode === 13) {
 
-            $("input[type='search']").blur();
-            oDT.search($("div.dataTables_filter input").val()).draw();
-            return false;
-        }
-
-        if (this.value === "") {
-            oDT.search("").draw();
-        }
-    });
-
-    $(document).on("keyup", "[aria-controls=tabla_2]", function (e) {
-        if (e.keyCode === 13) {
-
-            $("input[type='search']").blur();
-            oDT1.search($("div.dataTables_filter input").val()).draw();
-            return false;
-        }
-
-        if (this.value === "") {
-            oDT1.search("").draw();
-        }
-    });
 
     // Opcion para buscar por derminados filtros en datatable historico
-    document.getElementById("buscar").addEventListener("click", () =>{
+    document.getElementById("buscarFiltro").addEventListener("click", () => {
         let inputFechal = inputFecha.value;
         let inputplacal = inputPlaca.value;
         let selectConductorl = selectConductor_b.value;
         let selectPropietariol = selectPropietario_b.value;
 
-        if(inputFechal !== '' && inputplacal !== '' && selectConductorl !== '' && selectPropietariol !== ''){
+        if (inputFechal === '' && inputplacal === '' && selectConductorl === '' && selectPropietariol === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Se utiliza el botón de buscar debe haber campo al menos lleno. '
+                text: 'Se utiliza el botón de Consultar lleno algún campo. '
             });
             return;
         }
