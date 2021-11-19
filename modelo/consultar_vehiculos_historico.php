@@ -3,12 +3,10 @@
 error_reporting(0);
 require "./conexion.php";
 $conn = conectar();
-$order_ini = "placa DESC, va.id DESC";
+$order_ini = "va.id DESC";
 function consultar_lista_datos_tabla($conn, $fecha, $valor2, $valor3, $valor4)
 {
 
-    $fecha_1 = "";
-    $fecha_2 = "";
     $sql = "SELECT va.id, placa, color,  marca, va.id_conductor, va.id_propietario, estado, fecharegistro FROM vehiculos_asignados va
             RIGHT JOIN vehiculos v ON v.id = va.id_vehiculos  ";
 

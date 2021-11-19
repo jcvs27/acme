@@ -1,5 +1,5 @@
-oDt = {};
-oDt1 = {};
+oDT = {};
+oDT_1 = {};
 document.addEventListener("DOMContentLoaded", () => {
     // Función para validar los campos del formulario
     function validar() {
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             processing: true,
             scrollX: true,
             scrollCollapse: true,
-            ORDER: [(0, "DESC")],
+            order: [[0, "DESC"]],
             "language": {
                 "lengthMenu": "Filas _MENU_ por página",
                 "zeroRecords": "Sin datos",
@@ -166,12 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#tabla_2 tbody").html("");
         $(".camposLimpiar_1").val('');
         $(".camposSelect_1").val('');
-        oDT1 = $("#tabla_2").DataTable({
+        oDT_1 = $("#tabla_2").DataTable({
             destroy: true,
             processing: true,
             scrollX: true,
             scrollCollapse: true,
-            ORDER: [(1, "DESC"), (0, "DESC")],
+            order: [[1, "DESC"],[0, "DESC"] ],
             "language": {
                 "lengthMenu": "Filas _MENU_ por página",
                 "zeroRecords": "Sin datos",
@@ -248,11 +248,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Usar el buscador
-    $(document).on("keyup", "[aria-controls='tabla_1']", function (e) {
+    $(document).on("keyup", "[aria-controls=tabla_1]", function (e) {
         if (e.keyCode === 13) {
 
             $("input[type='search']").blur();
-            oDT.search($("div.dataTables_filter input").val()).draw();
+            oDT.search($("#tabla_1_filter input").val()).draw();
             return false;
         }
 
@@ -261,16 +261,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    $(document).on("keyup", "[aria-controls='tabla_2']", function (e) {
-
+    $(document).on("keyup", "[aria-controls=tabla_2]", function (e) {
         if (e.keyCode === 13) {
-            $("input[aria-controls='search']").blur();
-            oDT1.search($("div.dataTables_filter input").val()).draw();
+
+            $("input[type='search']").blur();
+            oDT_1.search($("#tabla_2_filter input").val()).draw();
             return false;
         }
 
         if (this.value === "") {
-            oDT1.search("").draw();
+            oDT_1.search("").draw();
         }
     });
     // Proceso para registra los propietarios y conductores
