@@ -44,10 +44,24 @@ if (isset($_POST['registro']) && $_POST['registro'] === 'true') {
 
     // Se realiza el registro
     if ($tipoReg === '1') {
+        // Se valida que ya no existe ese propietario
+        $queryValidar = "SELECT  COUNT(1) FROM propietarios WHERE identificacion = '$id'";
+        $resValidar = mysqli_query($conn, $queryValidar );
+        $dataValidar = $resValidar->fetch_row();
+        if($dataValidar[0] > 0 ){
+            Info("El propietario ya se encuentra registrado. ");
+        }
         $queryInser = "INSERT INTO propietarios (identificacion, primer_nombre, segundo_nombre, apellidos, direccion, telefono, ciudad )
                         VALUES ('$id', '$pNombre', $sNombre, '$apellido', '$direccion', '$telefono', '$ciudad')";
         $resInser = mysqli_query($conn, $queryInser);
     } else {
+        // Se valida que ya no existe ese conductor
+        $queryValidar = "SELECT  COUNT(1) FROM conductores WHERE identificacion = '$id'";
+        $resValidar = mysqli_query($conn, $queryValidar );
+        $dataValidar = $resValidar->fetch_row();
+        if($dataValidar[0] > 0 ){
+            Info("El conductor ya se encuentra registrado. ");
+        }
         $queryInser = "INSERT INTO conductores (identificacion, primer_nombre, segundo_nombre, apellidos, direccion, telefono, ciudad )
                         VALUES ('$id', '$pNombre', $sNombre, '$apellido', '$direccion', '$telefono', '$ciudad')";
         $resInser = mysqli_query($conn, $queryInser);
@@ -61,14 +75,64 @@ if (isset($_POST['registro']) && $_POST['registro'] === 'true') {
 }
 
 if(isset($_POST['registroVehiculo']) && $_POST['registroVehiculo'] === 'true'){
+
+
     // Se reciben las variables del registro del vehiculo
     $placa = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Placa");
     $color = isset($_POST['InputColor']) && $_POST['InputColor'] !== '' ? valTexto($_POST['InputColor']) : Info("Falta llenar el campo Color");
-    $marca = isset($_POST['InputMarca']) && $_POST['InputMarca'] !== '' ? valTexto($_POST['InputMarca']) : Info("Falta llenar el campo ");
-    $tipoVehiculo = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
-    $conductor = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
-    $propietario = isset($_POST['InputPlaca']) && $_POST['InputPlaca'] !== '' ? valTexto($_POST['InputPlaca']) : Info("Falta llenar el campo Identificación");
+    $marca = isset($_POST['InputMarca']) && $_POST['InputMarca'] !== '' ? valTexto($_POST['InputMarca']) : Info("Falta llenar el campo Marca ");
+    $tipoVehiculo = isset($_POST['tipoVehiculo']) && $_POST['tipoVehiculo'] !== '' ? valTexto($_POST['tipoVehiculo']) : Info("Falta seleccionar el tipo vehiculo");
+    $conductor = isset($_POST['selectConductor']) && $_POST['selectConductor'] !== '' ? valTexto($_POST['selectConductor']) : Info("Falta seleccionar el Conductor");
+    $propietario = isset($_POST['selectPropietario']) && $_POST['selectPropietario'] !== '' ? valTexto($_POST['selectPropietario']) : Info("Falta seleccinar el propietario");
+
+    // Se valida que ya no existe esa placa en el registro
+    $queryValidar = "SELECT  COUNT(1) FROM vehiculos WHERE placa = '$placa'";
+    $resValidar = mysqli_query($conn, $queryValidar );
+    $dataValidar = $resValidar->fetch_row();
+    if($dataValidar[0] > 0 ){
+        Info("La placa ya se encuentra registrada. ");
+    }
+
+    // Se realiza el insert
+    $queryInseV = "INSERT INTO vehiculos (placa, color, marca, tipo_vehiculo, conductor, propietario)
+                    VALUES ('$placa', '$color', '$marca', '$tipoVehiculo', $conductor, $propietario)";
+    $resInserV = mysqli_query($conn, $queryInseV);
+    $idVehiculo = mysqli_insert_id($conn);
+    
+    if($resInserV){
+        // Se guarda el log  que vehiculos sean asignado a propietario y conductor
+        $queryHistorico = "INSERT INTO vehiculo_asignados (id_vehiculos, id_conductor, id_propietario, estado)
+                            VALUES ( $idVehiculo, $conductor, $propietario, '1')";
+        mysqli_query($conn, $queryHistorico);                
+        success("Registro Existoso");
+    } else {
+        Info("No se logro el registro");
+    }
+
 }
 
+// Se trae los conductores
+if(isset($_POST['conductores']) && $_POST['conductores'] === 'true'){
+    $queryCond = "SELECT id_conductor, primer_nombre, segundo_nombre FROM conductores";
+    $resCond = mysqli_query($conn, $queryCond);
+    $dataCond = $resCond->fetch_all();
+    if($resCond->num_rows > 0){
+        echo json_encode($dataCond);
+    }else{
+        echo json_encode('0');
+    }
+}
+
+// Se trae los propietarios
+if(isset($_POST['propietarios']) && $_POST['propietarios'] === 'true'){
+    $queryCond = "SELECT id_propietario, primer_nombre, segundo_nombre FROM propietarios";
+    $resCond = mysqli_query($conn, $queryCond);
+    $dataCond = $resCond->fetch_all();
+    if($resCond->num_rows > 0){
+        echo json_encode($dataCond);
+    }else{
+        echo json_encode('0');
+    }
+}
 
 mysqli_close($conn);
