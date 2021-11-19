@@ -101,10 +101,15 @@ if(isset($_POST['registroVehiculo']) && $_POST['registroVehiculo'] === 'true'){
     
     if($resInserV){
         // Se guarda el log  que vehiculos sean asignado a propietario y conductor
-        $queryHistorico = "INSERT INTO vehiculo_asignados (id_vehiculos, id_conductor, id_propietario, estado)
-                            VALUES ( $idVehiculo, $conductor, $propietario, '1')";
-        mysqli_query($conn, $queryHistorico);                
-        success("Registro Existoso");
+        $queryHistorico = "INSERT INTO vehiculos_asignados (id_vehiculos, id_conductor, id_propietario, estado)
+                            VALUES ( $idVehiculo, $conductor, $propietario, '0')";
+        $res = mysqli_query($conn, $queryHistorico);  
+        if($res){
+            success("Registro Existoso");
+        }  else{
+            Info("No se logro el registro");
+        }            
+        
     } else {
         Info("No se logro el registro");
     }

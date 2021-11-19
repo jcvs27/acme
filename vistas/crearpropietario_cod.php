@@ -23,9 +23,6 @@
                     <li><a class="dropdown-item" href="crearvehiculo.php">Crear Vehiculo</a></li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Informe</a>
-            </li>
         </ul>
         <br>
         <div class="card">

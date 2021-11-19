@@ -1,7 +1,4 @@
 
-// variables globales
-const tipoRegistro = '';
-
 document.addEventListener("DOMContentLoaded", () => {
     // Función para validar los campos del formulario
     function validar() {
@@ -11,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let InputDireccionl = document.getElementById("InputDireccion").value;
         let InputTelefonol = document.getElementById("InputTelefono").value;
         let InputCuidadl = document.getElementById("InputCuidad").value;
-        
+
 
         if (InputIdenl === '') {
             Swal.fire({
@@ -56,14 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 text: 'Debe ingresar una Ciudad. '
             })
             return false;
-        }else if($(".inputTipo").is(':checked') === false){
+        } else if ($(".inputTipo").is(':checked') === false) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Debe seleccionar el tipo de registro. '
             })
             return false;
-        }else if(InputTelefonol.length < 7){
+        } else if (InputTelefonol.length < 7) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -101,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                         buttonGuardar.style.display = "block";
                         $(".camposLimpiar").val('');
-                        $(".inputTipo").prop("checked", false);
+                        $(".inputTipo").pror("checked", false);
                     } else {
                         buttonGuardar.style.display = "block";
                         Swal.fire({

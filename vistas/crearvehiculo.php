@@ -23,9 +23,6 @@
                     <li><a class="dropdown-item" href="crearvehiculo.php">Crear Vehiculo</a></li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Informe</a>
-            </li>
         </ul>
         <br>
         <div class="card">
@@ -50,7 +47,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label">Tipo Vehiculo</label>
-                               <select class="form-select" aria-label="Default select example" name="tipoVehiculo" id="tipoVehiculo" required>
+                               <select class="form-select camposSelect" aria-label="Default select example" name="tipoVehiculo" id="tipoVehiculo" required>
                                    <option value="">Seleccionar</option>
                                    <option value="1">Público</option>
                                    <option value="2">Privado</option>
@@ -58,11 +55,11 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label">Conductor</label>
-                                <select class="form-select" aria-label="Default select example" name="selectConductor" id="selectConductor" required></select>
+                                <select class="form-select camposSelect" aria-label="Default select example" name="selectConductor" id="selectConductor" required></select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label">Propietario</label>
-                                <select class="form-select" aria-label="Default select example" name="selectPropietario" id="selectPropietario" required></select>
+                                <select class="form-select camposSelect" aria-label="Default select example" name="selectPropietario" id="selectPropietario" required></select>
                             </div>
 
                         </div><br>

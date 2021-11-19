@@ -1,4 +1,4 @@
-
+oDt = {};
 document.addEventListener("DOMContentLoaded", () => {
     // Función para validar los campos del formulario
     function validar() {
@@ -58,10 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    // LImpiar campos del formulario
-    function limpiarCampos() {
-        $(".camposLimpiar").val();
-    }
 
     // Función para cargar los conductores
     function conductores() {
@@ -121,8 +117,73 @@ document.addEventListener("DOMContentLoaded", () => {
             })
     };
 
+    // Función para cargar el datatable
+    function cargarDatatable() {
+        $("#tabla_1 tbody").html("");
+        oDT = $("#tabla_1").DataTable({
+            destroy: true,
+            processing: true,
+            scrollX: true,
+            scrollCollapse: true,
+            ORDER: [(0, "DESC")],
+            "language": {
+                "lengthMenu": "Filas _MENU_ por página",
+                "zeroRecords": "Sin datos",
+                "info": "Pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin Datos",
+                "infoFiltered": "(filtro de _MAX_ total registros)"
+            },
+            columns: [
+                { data: "id", className: "text-center", sortable: true, visible: true },
+                {
+                    data: "placa",
+                    className: "text-center",
+                    sortable: true,
+                    visible: true,
+                },
+                {
+                    data: "marca",
+                    className: "text-center",
+                    sortable: true,
+                    visible: true,
+                },
+                {
+                    data: "color",
+                    className: "text-center",
+                    sortable: true,
+                    visible: true,
+                },
+                {
+                    data: "propietario",
+                    className: "text-center",
+                    sortable: false,
+                    visible: true,
+                },
+                {
+                    data: "conductor",
+                    className: "text-center",
+                    sortable: false,
+                    visible: true,
+                },
+            ],
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"],
+            ],
+            ajax:
+                "../modelo/consultar_vehiculos.php",
+            drawCallback: function (settings) {
+                $(".title_tooltip").tooltip();
+                $("div.dataTables_filter input").unbind();
+            },
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+               
+            },
+        });
+    }
+
     // Proceso para registra los propietarios y conductores
-    document.getElementById("Guardardatos").addEventListener("submit", (e) => {
+    /*document.getElementById("Guardardatos").addEventListener("submit", (e) => {
         e.preventDefault();
 
         let validador = validar();
@@ -164,9 +225,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 })
         }
-    })
+    })*/
     // Se realiza llamado a las funciones iniciales
     conductores();
     propietarios();
+    cargarDatatable();
 
 });
